@@ -6,11 +6,15 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\InertiaTestController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\CustomerController;
 use App\Models\Item;
 
 
 Route::resource('items', ItemController::class)
     ->middleware(['auth', 'verified']);
+
+Route::resource('customers', CustomerController::class)
+->middleware(['auth', 'verified']);    
 
 
 Route::inertia('/beginer/app','Beginer/App');
