@@ -5,7 +5,12 @@
   const isShow = ref(false)
   const toggleStatus = () => { isShow.value = !isShow.value}
   const search = ref('')
-  const customers = reactive({})
+  const customers = reactive({
+    id:null,
+    kana:null,
+    name:null,
+    tel:null
+  })
  
   // onMounted(() => {
   //   axios.get('/api/user')
@@ -30,7 +35,7 @@
   const emit = defineEmits(['update:customerId'])
   const setCustomer = (e) => {
       search.value = e.kana
-      emit('update:customerId',e.id)
+      emit('update:customerId',e.id,e.name,e.tel)
       toggleStatus()
   }
 
@@ -60,13 +65,23 @@
                 <tbody>
                   <tr v-for="customer in customers.value.data" :key="customer.id">
                     <td class="border-b-2 border-gray-200 px-4 py-3">
-                      <button @click="setCustomer({ id:customer.id, kana:customer.kana})" type="button" class="text-blue-400">
+                      <button @click="setCustomer({ id:customer.id, kana:customer.kana, name:customer.name, tel:customer.tel })" type="button" class="text-blue-400">
                         {{ customer.id }}
                       </button>
                     </td>
-                    <td class="border-b-2 border-gray-200 px-4 py-3">{{ customer.name }}</td>
-                    <td class="border-b-2 border-gray-200 px-4 py-3">{{ customer.kana }}</td>
-                    <td class="border-b-2 border-gray-200 px-4 py-3">{{ customer.tel }}</td>
+                    <td class="border-b-2 border-gray-200 px-4 py-3">
+                      <button @click="setCustomer({ id:customer.id, kana:customer.kana, name:customer.name,tel:customer.tel })" type="button" class="text-blue-400">
+                      {{ customer.name }}
+                    </button>
+                    </td>
+                    <td class="border-b-2 border-gray-200 px-4 py-3">
+                      <button @click="setCustomer({ id:customer.id, kana:customer.kana, name:customer.name,tel:customer.tel })" type="button" class="text-blue-400">
+                      {{ customer.kana }}
+                    </button>
+                    </td>
+                    <td class="border-b-2 border-gray-200 px-4 py-3">
+                      {{ customer.tel }}
+                    </td>
                   </tr>
                 </tbody>
             </table>
@@ -78,6 +93,6 @@
       </div>
     </div>
   </div>
-  <input name="customer" v-model="search" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-  <button @click="searchCustomers" type="button"  data-micromodal-trigger="modal-1" class=" flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">検索する</button>
+  <input name="customer" v-model="search" class="mt-2 w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+  <button @click="searchCustomers" type="button"  data-micromodal-trigger="modal-1" class="mt-2 flex mx-auto text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">検索する</button>
 </template>
